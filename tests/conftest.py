@@ -1,15 +1,15 @@
+import itertools
 import json
 import logging
 import os
 from datetime import datetime
 
 import pytest
+import torch
+from _pytest.python import Metafunc
 
 import flag_gems
-import torch
 
-import itertools
-from _pytest.python import Metafunc
 device = flag_gems.device
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -45,7 +45,7 @@ def pytest_addoption(parser):
     )
     parser.addoption(
         "--limit-cases",
-        type=int, 
+        type=int,
         default=None,
     )
     parser.addoption(
@@ -141,6 +141,7 @@ CUSTOM_TEST_PARAMS = {
 
 CUSTOM_PARAM_MARK = pytest.mark.custom_params
 
+
 @pytest.hookimpl(tryfirst=True)
 def pytest_generate_tests(metafunc: Metafunc) -> None:
     test_name = metafunc.function.__name__
@@ -150,15 +151,11 @@ def pytest_generate_tests(metafunc: Metafunc) -> None:
 
     cfg = CUSTOM_TEST_PARAMS[test_name]
 
-    argnames = list(cfg.keys())  
+    argnames = list(cfg.keys())
     value_lists = [cfg[name] for name in argnames]
     combos = list(itertools.product(*value_lists))
 
-    params = [
-        pytest.param(*vals, marks=CUSTOM_PARAM_MARK)
-        for vals in combos
-    ]
-
+    params = [pytest.param(*vals, marks=CUSTOM_PARAM_MARK) for vals in combos]
 
     metafunc._calls = []
 
@@ -172,11 +169,10 @@ def pytest_generate_tests(metafunc: Metafunc) -> None:
         if node is None:
             continue
         if hasattr(node, "own_markers"):
-            node.own_markers = [
-                m for m in node.own_markers if m.name != "parametrize"
-            ]
+            node.own_markers = [m for m in node.own_markers if m.name != "parametrize"]
 
     return
+
 
 @pytest.hookimpl
 def pytest_collection_modifyitems(config, items):
@@ -184,7 +180,7 @@ def pytest_collection_modifyitems(config, items):
     deselected = []
     counter = {}
     if not COMPILER_CHOICE and not LIMIT:
-        return 
+        return
 
     for item in items:
         if COMPILER_CHOICE:
@@ -209,7 +205,6 @@ def pytest_collection_modifyitems(config, items):
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_runtest_protocol(item, nextitem):
-        
     test_results[item.nodeid] = {"params": None, "result": None, "opname": None}
     param_values = {}
     request = item._request
