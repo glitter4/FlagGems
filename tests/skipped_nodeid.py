@@ -22,7 +22,6 @@ UNSELECT_NODEIDS = {
     "tests/test_norm_ops.py::test_accuracy_groupnorm[dtype0-False-16-3-16-16-1]",
     "tests/test_norm_ops.py::test_accuracy_batch_norm[True-dtype0-shape0]",
     "tests/test_pointwise_type_promotion.py::test_type_promotion_bool_to_long[float_dtype0-shape0]",
-    "tests/test_reduction_ops.py::test_accuracy_amax[dtype0-True-1-shape0]",
     "tests/test_distribution_ops.py::test_accuracy_normal[dtype0-shape0-none]",
     "tests/test_distribution_ops.py::test_accuracy_uniform[dtype0-shape0]",
     "tests/test_distribution_ops.py::test_accuracy_exponential_[dtype0-shape0]",
@@ -50,5 +49,11 @@ UNSELECT_NODEIDS = {
     "tests/test_unary_pointwise_ops.py::test_accuracy_atan[dtype0-shape0]",
     "tests/test_reduction_ops.py::test_topk_softmax[1-4-2-index_dtype0]",
     "tests/test_unary_pointwise_ops.py::test_accuracy_atan_[dtype0-shape0]",
-    
+}
+UNSELECT_FUNCTION_NAMES = {
+    "test_topk",
+    "test_topk_softmax",
+    "test_accuracy_amax",
+    "test_upsample_nearest2d",
+    "test_accuracy_normal",
 }

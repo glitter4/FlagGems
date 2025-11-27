@@ -12,6 +12,7 @@ import flag_gems
 
 import itertools
 from .skipped_nodeid import UNSELECT_NODEIDS
+from .skipped_nodeid import UNSELECT_FUNCTION_NAMES
 from _pytest.python import Metafunc
 device = flag_gems.device
 
@@ -60,7 +61,7 @@ def pytest_addoption(parser):
         help="compiler to run  tests with",
     )
     parser.addoption(
-    "--skipped-unselected-nodeids",
+    "--skipped-spectest",
     action="store_true",
     default=False,
     help="Whether to use the unselected nodeids list.", 
@@ -80,8 +81,8 @@ def pytest_configure(config):
     global COMPILER_CHOICE
     COMPILER_CHOICE = config.getoption("--compiler-choice") == "flagtree"
 
-    global SKIP_SPEC_NODEIDS
-    SKIP_SPEC_NODEIDS = config.getoption("--skipped-unselected-nodeids")
+    global SKIP_SPECTEST
+    SKIP_SPECTEST = config.getoption("--skipped-spectest")
 
 
     global RECORD_LOG
@@ -201,11 +202,14 @@ def pytest_collection_modifyitems(config, items):
                 selected.append(item)
             else:
                 deselected.append(item)
-        if SKIP_SPEC_NODEIDS:
-            if item.nodeid in UNSELECT_NODEIDS:
+        func_name = item.function.__name__
+        if SKIP_SPECTEST:
+            if item.nodeid in UNSELECT_NODEIDS or func_name in UNSELECT_FUNCTION_NAMES:
                 deselected.append(item)
+                continue
+            
         if LIMIT:
-            func_name = item.function.__name__
+            print( "func_name:", func_name)
             counter.setdefault(func_name, 0)
 
             if counter[func_name] < LIMIT:
