@@ -203,7 +203,6 @@ def pytest_collection_modifyitems(config, items):
             else:
                 deselected.append(item)
         func_name = item.function.__name__
-        print( "node_id:", item.nodeid)
         if SKIP_SPECTEST:
             if item.nodeid in UNSELECT_NODEIDS or func_name in UNSELECT_FUNCTION_NAMES:
                 deselected.append(item)
