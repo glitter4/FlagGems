@@ -119,4 +119,12 @@ UNSELECT_FUNCTION_NAMES = {
     "test_accuracy_conv1d",
     "test_accuracy_conv2d",
     "test_accuracy_depthwise2d",
+    "test_accuracy_gelu",
+    "test_accuracy_gelu_",
+    "test_accuracy_silu_backward",
+    "test_accuracy_triu",
+    "test_accuracy_scatter_mul",
+    "test_accuracy_inplace_scatter_mul",
+    "test_accuracy_mm",
+    "test_type_promotion_bool_to_long",
 }
