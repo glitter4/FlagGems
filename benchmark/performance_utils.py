@@ -373,6 +373,7 @@ class Benchmark:
         for dtype in self.to_bench_dtypes:
             metrics = []
             for input in self.get_input_iter(dtype):
+                torch.cuda.empty_cache()
                 metric = BenchmarkMetrics()
                 try:
                     args, kwargs = self.unpack_to_args_kwargs(input)
