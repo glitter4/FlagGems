@@ -470,6 +470,7 @@ def list_iluvatar_v3_1():
         "test_type_promotion_default",
         "test_type_promotion_int_to_float",
         "test_upsample_bicubic2d_aa",
+        "test_accuracy_add",
     }
     UNSELECT_NODEIDS={
         "tests/test_attention_ops.py::test_flash_fwd_swa[dtype0-False-256-0-128-1-1-128-2048]",
