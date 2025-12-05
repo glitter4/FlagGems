@@ -130,7 +130,7 @@ def list_nvidia_v3_1():
         "test_type_promotion_bool_to_long",
     }
     return UNSELECT_NODEIDS, UNSELECT_FUNCTION_NAMES
-def list_hcu_v3_1():
+def list_hygon_v3_1():
     UNSELECT_NODEIDS = {
         "tests/test_attention_ops.py::test_sdpa_nonsquare_qk[dtype0-False-64-1-1-128-2048]",
         "tests/test_attention_ops.py::test_flash_fwd_nonsquare_qk[dtype0-False-64-1-1-128-2048]",
@@ -635,7 +635,7 @@ vendor_name=flag_gems.vendor_name.lower()
 
 dispatch = { "nvidia_3.1.0": list_nvidia_v3_1, 
              "iluvatar_3.1.0": list_iluvatar_v3_1, 
-             "hcu_3.1.0": list_hcu_v3_1,
+             "hygon_3.1.0": list_hygon_v3_1,
             }
 version = f"{vendor_name}_{version_name}" # set your version here
 UNSELECT_NODEIDS, UNSELECT_FUNCTION_NAMES = dispatch.get(version, lambda: [])()
