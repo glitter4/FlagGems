@@ -258,8 +258,6 @@ def index_add(inp, dim, index, src, alpha=1):
     )
     return out
 
-def index_add_paddle(x, index, value, axis, out=None) -> 'Tensor':
-    return index_add(x, axis, index, value)
 
 def index_add_(inp, dim, index, src, alpha=1):
     logger.debug("GEMS INDEX ADD_")

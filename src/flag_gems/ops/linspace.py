@@ -42,9 +42,7 @@ def linspace(
     out = torch.empty(
         steps,
         dtype=dtype,
-        layout=layout,
         device=device,
-        pin_memory=pin_memory,
     )
     if steps == 1:
         return torch.fill(out, start)

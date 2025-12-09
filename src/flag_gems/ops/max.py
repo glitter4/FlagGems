@@ -97,7 +97,7 @@ def max_kernel(
 def max(inp):
     logger.debug("GEMS MAX")
     inp = inp.contiguous()
-    M = inp.numel()
+    M = inp.size
     block_size = triton.next_power_of_2(math.ceil(math.sqrt(M)))
     mid_size = triton.cdiv(M, block_size)
     block_mid = triton.next_power_of_2(mid_size)
@@ -135,3 +135,7 @@ def max_dim(inp, dim=None, keepdim=False):
     Max_out = namedtuple("max", ["values", "indices"])
     out = Max_out(values=out_value, indices=out_index)
     return out
+
+
+def max_paddle(x, axis, keepdim):
+    return max(x)

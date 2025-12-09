@@ -488,7 +488,7 @@ from flag_gems.ops.argmax import argmax_paddle as argmax
 from flag_gems.ops.diag import diag_paddle as diag
 from flag_gems.ops.dot import dot_paddle as dot
 from flag_gems.ops.embedding import  embedding_paddle as embedding
-from flag_gems.ops.index_add import index_add_paddle as index_add 
+from flag_gems.ops.max import max_paddle as max
 from flag_gems.ops.ones import ones_paddle as ones 
 from flag_gems.ops.zeros import zeros_paddle as zeros
 from flag_gems.ops.zeros_like import zeros_like_paddle as zeros_like
@@ -511,11 +511,11 @@ __all__ = [
     "diag",
     "dot",
     "embedding",
-    "index_add",
     "ones",
     "zeros",
     "zeros_like",
     "topk",
+    "max",
     "min",
     "mv",
     "index_select",

@@ -373,11 +373,11 @@ def enable(
             ("_C_ops.diag", diag),
             ("_C_ops.dot", dot),
             ("_C_ops.embedding", embedding), 
-            ("_C_ops.index_add", index_add),
             ("_C_ops.ones", ones),
             ("_C_ops.zeros", zeros),
             ("_C_ops.zeros_like", zeros_like),
             ("_C_ops.topk", topk),
+            ("_C_ops.max", max),
             ("_C_ops.min", min),
             ("_C_ops.mv", mv),
             ("_C_ops.index_select", index_select)
