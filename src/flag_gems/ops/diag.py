@@ -105,3 +105,6 @@ def diag(x, diagonal=0):
         return diag_2d_to_1d(x, diagonal)
     else:
         raise ValueError("Input must be a 1D or 2D tensor.")
+
+def diag_paddle(x: 'Tensor', offset: int = 0, padding_value: float = 0.0) -> 'Tensor':
+    return diag(x, diagonal=offset)

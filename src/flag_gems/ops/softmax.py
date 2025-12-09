@@ -297,7 +297,7 @@ def softmax(self, dim, half_to_float=False):
     else:
         dtype = self.dtype
     out = torch.empty_like(self, dtype=dtype)
-    K = self.numel() // M // N  # post_dim
+    K = self.size // M // N  # post_dim
 
     with torch_device_fn.device(self.place):
         if K > 1:
@@ -332,7 +332,7 @@ def softmax_backward(grad_output, output, dim, input_dtype):
 
     grad_output = grad_output.contiguous()
     in_grad = torch.empty_like(output, dtype=input_dtype)
-    K = output.numel() // M // N
+    K = output.size // M // N
 
     with torch_device_fn.device(in_grad.place):
         if K > 1:

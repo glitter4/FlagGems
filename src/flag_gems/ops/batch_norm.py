@@ -393,7 +393,7 @@ def  batch_norm_backward(
         bias_grad = None
 
     # Launches 1D grid where each program operates over one feature.
-    with torch_device_fn.device(input.place):
+    with torch_device_fn.device(input.device):
         batch_norm_backward_kernel[(feat_dim,)](
             output_grad_3d,
             input_3d,
@@ -419,43 +419,3 @@ def  batch_norm_backward(
         bias_grad,
     )
 
-class BatchNorm(PyLayer):
-    @staticmethod
-    def forward(ctx, input, running_mean=None, running_var=None, weight=None, bias=None, 
-                training=False, momentum=0.1, eps=1e-05, data_format = None,use_global_stats = None,trainable_statistics = None,):
-        
-        ctx.save_for_backward(input, weight, running_mean, running_var)
-        ctx.training = training
-        ctx.momentum = momentum
-        ctx.eps = eps
-       
-        output, save_mean, save_invstd = batch_norm(
-            input = input, weight=weight, bias=bias, running_mean=running_mean, running_var=running_var, 
-            training = not training, momentum=momentum, eps=eps
-        )
-
-        ctx.save_mean = save_mean
-        ctx.save_invstd = save_invstd
-        
-        return output, None, None , None, None , None
-    
-    @staticmethod
-    def backward(ctx, grad_output):
-
-        input, weight, running_mean, running_var = ctx.saved_tensor()
-        training = ctx.training
-        momentum = ctx.momentum
-        eps = ctx.eps
-        save_mean = ctx.save_mean
-        save_invstd = ctx.save_invstd
-        
-        output_mask = [True, True, True]
-
-        grad_input, grad_weight, grad_bias = batch_norm_backward(
-            grad_output, input, weight, running_mean, running_var,
-            save_mean, save_invstd, training, eps, output_mask
-        )
-        
-        return grad_input, None, None, None, None
-
-batch_norm_paddle = BatchNorm.apply

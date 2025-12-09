@@ -154,3 +154,5 @@ def argmax(inp, dim=None, keepdim=False, *, dtype=None):
             )
 
         return out_index
+def argmax_paddle(x: 'Tensor', dim: 'int | None' = None, keepdim: 'bool' = False, dtype: 'DTypeLike' = 'int64', name: 'str | None' = None) -> 'Tensor':
+    return argmax(x, dim=dim, keepdim=keepdim, dtype=dtype)

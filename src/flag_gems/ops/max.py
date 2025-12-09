@@ -120,7 +120,7 @@ def max_dim(inp, dim=None, keepdim=False):
     inp = dim_compress(inp, dim)
     N = shape[dim]
     shape[dim] = 1
-    M = inp.numel() // N
+    M = inp.size // N
 
     out_value = torch.empty(shape, dtype=inp.dtype, device=inp.device)
     out_index = torch.empty(shape, dtype=torch.int64, device=inp.device)

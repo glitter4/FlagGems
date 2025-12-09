@@ -43,12 +43,12 @@ def index_select(inp, dim, index):
         index = index.unsqueeze(0)
     dim = dim % inp.ndim
     inp_shape = list(inp.shape)
-    index_len = index.numel()
+    index_len = index.numel().item()
 
     # with dim_compress
     inp = dim_compress(inp, dim)
     N = inp_shape[dim]
-    M = inp.numel() // N
+    M = inp.size // N
     out_shape = list(inp.shape)
     out_shape[inp.ndim - 1] = index_len
     out = torch.empty(out_shape, dtype=inp.dtype, device=inp.device)
@@ -65,3 +65,6 @@ def index_select(inp, dim, index):
         return out.reshape(out.shape)
     else:
         return out
+
+def index_select_paddle(inp, index, dim, out=None):
+    return index_select(inp, dim, index)

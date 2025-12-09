@@ -132,3 +132,8 @@ def amax(inp, dim=None, keepdim=False):
         if not keepdim:
             out = out.squeeze(dim=dim)
         return out
+
+def amax_paddle(x: 'Tensor', dim: 'int | Sequence[int] | None' = None, keepdim: 'bool' = False,   name: 'str | None' = None, *, out: 'Tensor | None' = None) -> 'Tensor':
+    if isinstance(dim, int):
+        dim = [dim]
+    return amax(x, dim, keepdim)

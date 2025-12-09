@@ -199,7 +199,7 @@ def embedding_backward(
 class Embedding(PyLayer):
     @staticmethod
     def forward(
-        ctx, indices, weight, padding_idx=-1, scale_grad_by_freq=False, sparse=False
+        ctx, indices, weight, padding_idx, scale_grad_by_freq=False, sparse=False
     ):
         ctx.save_for_backward(indices, weight)
         ctx.padding_idx = padding_idx
@@ -215,7 +215,7 @@ class Embedding(PyLayer):
         scale_grad_by_freq = ctx.scale_grad_by_freq
         sparse = ctx.sparse
 
-        grad_weight = embedding_backward(
+        grad_input = embedding_backward(
             grad_outputs,
             indices,
             weight.shape[0],
@@ -224,7 +224,7 @@ class Embedding(PyLayer):
             sparse,
         )
 
-        return None, grad_weight
+        return None, grad_input
 
 
 embedding_paddle = Embedding.apply

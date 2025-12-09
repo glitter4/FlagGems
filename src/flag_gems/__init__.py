@@ -27,7 +27,7 @@ if framework_name == "paddle":
     paddle.compat.enable_torch_proxy()
 
 
-# from flag_gems import testing  # noqa: F401
+from flag_gems import testing  # noqa: F401
 from flag_gems import runtime
 from flag_gems.config import aten_patch_list
 # from flag_gems.fused import *  # noqa: F403
@@ -362,25 +362,25 @@ def enable(
         op_config = (# When replacing _C_ops.func, it is necessary to maintain consistency between the custom operator and the input parameters of _C_ops.func. 
         #When directly replacing the function of paddle.xxx, after flag_gems.enable, it needs to be re added to the function of paddle.xxx
             ("_C_ops.softmax", softmax),
-            ("_C_ops.bmm", bmm),
-            ("sum", sum),
-            ("mean", mean),
-            ("triu", triu),
+            ("_C_ops.bmm", bmm), 
+            ("_C_ops.sum", sum),
+            ("_C_ops.mean", mean),
+            ("_C_ops.triu", triu),
             ("_C_ops.addmm",addmm),
-            ("all", all),
-            ("amax", amax),
-            ("any", any),
-            ("arange", arange),
-            ("argmax", argmax),
-            ("argmin", argmin),
-            ("_C_ops.batch_norm", batch_norm),
-            ("count_nonzero", count_nonzero),
-            ("diag", diag),
-            ("dot", dot),
-            ("_C_ops.embedding", embedding),
-            ("index_add", index_add),
-            ("ones", ones),
-            ("vstack", vstack),
+            ("_C_ops.all", all),
+            ("_C_ops.amax", amax),
+            ("_C_ops.argmax", argmax),
+            ("_C_ops.diag", diag),
+            ("_C_ops.dot", dot),
+            ("_C_ops.embedding", embedding), 
+            ("_C_ops.index_add", index_add),
+            ("_C_ops.ones", ones),
+            ("_C_ops.zeros", zeros),
+            ("_C_ops.zeros_like", zeros_like),
+            ("_C_ops.topk", topk),
+            ("_C_ops.min", min),
+            ("_C_ops.mv", mv),
+            ("_C_ops.index_select", index_select)
         )
         current_work_registrar = registrar(
             op_config,

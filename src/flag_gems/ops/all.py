@@ -101,6 +101,8 @@ def all(inp):
 
     return out
 
+def all_paddle(x: 'Tensor', axis: 'int | Sequence[int] | None' = None, keepdim: 'bool' = False, name: 'str | None' = None, *, out: 'Tensor | None' = None) -> 'Tensor':
+    return all(inp = x)
 
 def all_dim(inp, dim=None, keepdim=False):
     logger.debug("GEMS ALL DIM")

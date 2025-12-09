@@ -477,52 +477,46 @@
 #     "get_scheduler_metadata",
 # ]
 from flag_gems.ops.softmax import softmax_paddle as softmax
-from flag_gems.ops.bmm import bmm
-from flag_gems.ops.sum import sum, sum_dim, sum_dim_out, sum_out
-from flag_gems.ops.mean import mean, mean_dim
-from flag_gems.ops.triu import triu
-from flag_gems.ops.addmm import addmm_paddle as addmm, addmm_out
-from flag_gems.ops.all import all
-from flag_gems.ops.amax import amax
-from flag_gems.ops.any import any
-from flag_gems.ops.arange import arange
-from flag_gems.ops.argmax import argmax
-from flag_gems.ops.argmin import argmin
-from flag_gems.ops.batch_norm import batch_norm_paddle as batch_norm
-from flag_gems.ops.bmm import bmm
-from flag_gems.ops.count_nonzero import count_nonzero
-from flag_gems.ops.diag import diag
-from flag_gems.ops.dot import dot
+from flag_gems.ops.bmm import bmm_paddle as bmm
+from flag_gems.ops.sum import sum_paddle as sum
+from flag_gems.ops.mean import mean_paddle as mean
+from flag_gems.ops.triu import triu_paddle as triu 
+from flag_gems.ops.addmm import addmm_paddle as addmm
+from flag_gems.ops.all import all_paddle as all
+from flag_gems.ops.amax import amax_paddle as amax
+from flag_gems.ops.argmax import argmax_paddle as argmax
+from flag_gems.ops.diag import diag_paddle as diag
+from flag_gems.ops.dot import dot_paddle as dot
 from flag_gems.ops.embedding import  embedding_paddle as embedding
-from flag_gems.ops.index_add import index_add
-from flag_gems.ops.ones import ones
-from flag_gems.ops.vstack import vstack
+from flag_gems.ops.index_add import index_add_paddle as index_add 
+from flag_gems.ops.ones import ones_paddle as ones 
+from flag_gems.ops.zeros import zeros_paddle as zeros
+from flag_gems.ops.zeros_like import zeros_like_paddle as zeros_like
+from flag_gems.ops.topk import topk_paddle as topk
+from flag_gems.ops.min import min_paddle as min
+from flag_gems.ops.mv import mv_paddle as mv
+from flag_gems.ops.index_select import index_select_paddle as index_select
+
 
 __all__ = [
     "softmax",
     "bmm",
     "sum",
-    "sum_dim",
-    "sum_dim_out",
-    "sum_out",
     "mean",
-    "mean_dim",
     "triu",
     "addmm",
-    "addmm_out",
     "all",
     "amax",
-    "any",
-    "arange",
     "argmax",
-    "argmin",
-    "batch_norm",
-    "bmm",
-    "count_nonzero",
     "diag",
     "dot",
     "embedding",
     "index_add",
     "ones",
-    "vstack",
+    "zeros",
+    "zeros_like",
+    "topk",
+    "min",
+    "mv",
+    "index_select",
 ]

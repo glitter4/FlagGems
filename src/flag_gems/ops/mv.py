@@ -70,3 +70,6 @@ def mv(inp, vec):
             out.stride(0),
         )
     return out
+
+def mv_paddle(inp, vec):
+    return mv(inp, vec)

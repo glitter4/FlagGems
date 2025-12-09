@@ -41,3 +41,6 @@ def ones(size, *, dtype=None, layout=None, device=None, pin_memory=None):
     with torch_device_fn.device(device):
         ones_kernel[grid](out, N, BLOCK_SIZE)
     return out
+
+def ones_paddle(shape, dtype = None, place = None) -> 'Tensor':
+    return ones(shape, dtype=dtype, device=place)

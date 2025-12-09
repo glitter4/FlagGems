@@ -103,3 +103,6 @@ def triu(A, diagonal=0):
             )
             out = out.view(A.shape)
     return out
+
+def triu_paddle(x: 'Tensor', diagonal: int = 0) -> 'Tensor':
+    return triu(x, diagonal)

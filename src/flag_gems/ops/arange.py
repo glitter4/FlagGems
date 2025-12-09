@@ -58,3 +58,6 @@ def arange(end, *, dtype=None, layout=None, device=None, pin_memory=None):
     return arange_start(
         0, end, 1, dtype=dtype, layout=layout, device=device, pin_memory=pin_memory
     )
+
+def arange_paddle(start, end, step, dtype, device, out=None):
+    return arange_start(start, end, step, dtype=dtype, device=device)

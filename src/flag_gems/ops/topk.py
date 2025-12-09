@@ -333,3 +333,6 @@ def topk(x, k, dim=-1, largest=True, sorted=True):
         )
 
     return (stage2_out, stage2_out_idx)
+
+def topk_paddle(x: 'Tensor', k: int = 1, axis: int = -1, largest: bool = True, sorted: bool = True, out=None) -> tuple['Tensor', 'Tensor']:
+    return topk(x, k, dim=axis, largest=largest, sorted=sorted)

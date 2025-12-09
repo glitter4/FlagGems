@@ -59,6 +59,8 @@ def mean(inp, *, dtype=None):
         mean_kernel_2[(1, 1, 1)](mid, out, M, mid_size, block_mid)
     return out
 
+def mean_paddle(x: 'Tensor', axis: list[int] = [], keepdim: bool = False, out = None) -> 'Tensor':
+    return mean(inp = x, dtype = None)
 
 @libentry()
 @libtuner(

@@ -93,3 +93,6 @@ def dot(x, y):
             out = out.to(x.dtype)
 
     return out
+
+def dot_paddle(x: 'Tensor', y: 'Tensor', name: 'str | None' = None, *, out: 'Tensor | None' = None) -> 'Tensor':
+    return dot(x, y)

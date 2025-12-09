@@ -134,3 +134,6 @@ def bmm(A, B):
     with torch_device_fn.device(A.place):
         bmm_kernel[grid_fn](A, B, out, M, N, K)
     return out
+
+def bmm_paddle(x: 'Tensor', y: 'Tensor', name: 'str | None' = None, *, out: 'Tensor | None' = None) -> 'Tensor':
+    return bmm(x, y)

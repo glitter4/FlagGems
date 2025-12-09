@@ -23,3 +23,6 @@ def zeros_like(
     with torch_device_fn.device(x.device):
         zeros_kernel[grid_fn](out, N, BLOCK_SIZE=1024)
     return out
+
+def zeros_like_paddle(x: 'Tensor', dtype = None, place = None) -> 'Tensor':
+    return zeros_like(x, dtype=dtype, device=place)

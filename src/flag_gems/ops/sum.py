@@ -78,7 +78,8 @@ def sum(inp, *, dtype=None):
         sum_kernel_2[(1, 1, 1)](mid, out, mid_size, block_mid)
     return out
 
-
+def sum_paddle(x: 'Tensor', axis: 'int | Sequence[int] | None' = None, dtype: 'DTypeLike | None' = None, keepdim: 'bool' = False, name: 'str | None' = None, *, out: 'Tensor | None' = None) -> 'Tensor':
+    return sum(inp = x, dtype=dtype)
 def sum_out(inp, *, dtype=None, out):
     logger.debug("GEMS SUM_OUT")
     M = inp.numel()

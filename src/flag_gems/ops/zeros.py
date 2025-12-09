@@ -38,3 +38,6 @@ def zeros(size, *, dtype=None, layout=None, device=None, pin_memory=None):
     with torch_device_fn.device(device):
         zeros_kernel[grid_fn](out, N, BLOCK_SIZE=1024)
     return out
+
+def zeros_paddle(shape: list[int], dtype = None, place = None) -> 'Tensor':
+    return zeros(shape, dtype=dtype, device=place)

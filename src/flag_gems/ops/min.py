@@ -121,7 +121,7 @@ def min_dim(inp, dim=None, keepdim=False):
     inp = dim_compress(inp, dim)
     N = shape[dim]
     shape[dim] = 1
-    M = inp.numel() // N
+    M = inp.size // N
 
     out_value = torch.empty(shape, dtype=inp.dtype, device=inp.device)
     out_index = torch.empty(shape, dtype=torch.int64, device=inp.device)
@@ -136,3 +136,6 @@ def min_dim(inp, dim=None, keepdim=False):
     Min_out = namedtuple("min", ["values", "indices"])
     out = Min_out(values=out_value, indices=out_index)
     return out
+
+def min_paddle(x, dim, keepdim):
+    return min_dim(x, dim , keepdim)[0]
