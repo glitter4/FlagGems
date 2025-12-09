@@ -157,7 +157,7 @@ def test_accuracy_sum_without_dim(shape, dtype):
     with flag_gems.use_gems():
         res_out = torch.sum(inp)
 
-    gems_assert_close(res_out, ref_out, dtype, reduce_dim=inp.numel())
+    gems_assert_close(res_out, ref_out, dtype, reduce_dim=inp.size)
 
 @pytest.mark.skipif(
     flag_gems.vendor_name == "kunlunxin",
