@@ -9,9 +9,6 @@ from flag_gems import runtime
 from flag_gems.runtime import torch_device_fn
 from flag_gems.utils import libentry, tl_extra_shim
 
-import paddle
-from paddle.autograd import PyLayer
-
 logger = logging.getLogger(__name__)
 rsqrt = tl_extra_shim.rsqrt
 

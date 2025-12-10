@@ -138,4 +138,6 @@ def min_dim(inp, dim=None, keepdim=False):
     return out
 
 def min_paddle(x, dim, keepdim):
+    if dim == None:
+        return min_dim(x, 0 , keepdim)[0]
     return min_dim(x, dim , keepdim)[0]

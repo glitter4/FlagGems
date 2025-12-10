@@ -361,8 +361,8 @@ def enable(
     elif framework_name == "paddle":
         op_config = (# When replacing _C_ops.func, it is necessary to maintain consistency between the custom operator and the input parameters of _C_ops.func. 
         #When directly replacing the function of paddle.xxx, after flag_gems.enable, it needs to be re added to the function of paddle.xxx
-            ("_C_ops.softmax", softmax),
-            ("_C_ops.bmm", bmm), 
+            ("_C_ops.softmax", softmax), # Todo: backward hang
+            ("_C_ops.bmm", bmm), # Todo: oom
             ("_C_ops.sum", sum),
             ("_C_ops.mean", mean),
             ("_C_ops.triu", triu),

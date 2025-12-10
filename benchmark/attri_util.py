@@ -3,9 +3,35 @@ from dataclasses import asdict, dataclass, fields
 from enum import Enum
 from typing import List, Optional, Tuple
 
+if quick:
+    DEFAULT_WARMUP_COUNT = 2
+    DEFAULT_ITER_COUNT = 2
+
+    # LEGACY_SHAPES are maintained for legacy benchmark SIZE settings and may be removed in the future.
+    # Do not reference this elsewhere.
+    LEGACY_SHAPES = [i * 2 for i in range(1, 2, 1)]
+    LEGACY_NON_BLAS_SHAPES = [(2, shape) for shape in LEGACY_SHAPES]
+    LEGACY_BLAS_SHAPES = [(2, shape, shape, shape) for shape in LEGACY_SHAPES]
+
+    # Default shapes settings
+    DEFAULT_SHAPES = [
+        (2,2)
+    ]
+
+
+    def model_shapes():
+        # batch sizes * seq lengths
+        # BS = [1, 2, 3, 4, 8, 98, 256, 8192]
+        BS = [2]
+        # attn: wqkv, wo; ffn: w13, w2
+        NK = [
+            [2,4]
+        ]
+
 import torch
 
 FLOAT_DTYPES = [torch.float16, torch.float32, torch.bfloat16]
+PADDLE_FLOAT_DTYPES = [torch.float32]
 INT_DTYPES = [torch.int16, torch.int32]
 BOOL_DTYPES = [torch.bool]
 COMPLEX_DTYPES = [torch.complex64]
@@ -169,6 +195,8 @@ class OperationAttribute:
 def custom_json_encoder(obj):
     if isinstance(obj, torch.dtype):
         return str(obj)
+    if isinstance(obj, torch.Tensor):
+        return obj.shape
     raise TypeError(f"Object of type {obj.__class__.__name__} is not JSON serializable")
 
 

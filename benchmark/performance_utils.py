@@ -333,7 +333,7 @@ class Benchmark:
         except StopIteration:
             return None
 
-    def unpack_to_args_kwargs(self, input_tuple: Tuple[Any, ...]):
+    def unpack_to_args_kwargs(self, input_tuple: Tuple[Any, ...],is_backward:bool = False):
         args = []
         kwargs = {}
         for item in input_tuple:
@@ -351,7 +351,8 @@ class Benchmark:
         for a in args:
             if torch.is_tensor(a) and torch.is_floating_point(a):
                 aa = a.clone().detach()
-                aa.requires_grad_(True)
+                if is_backward:
+                    aa.requires_grad_(True)
                 new_args.append(aa)
             else:
                 new_args.append(a)
@@ -373,10 +374,9 @@ class Benchmark:
         for dtype in self.to_bench_dtypes:
             metrics = []
             for input in self.get_input_iter(dtype):
-                torch.cuda.empty_cache()
                 metric = BenchmarkMetrics()
                 try:
-                    args, kwargs = self.unpack_to_args_kwargs(input)
+                    args, kwargs = self.unpack_to_args_kwargs(input,self.is_backward)
                     metric.shape_detail = self.record_shapes(*args, **kwargs)
                     if "latency_base" in self.to_bench_metrics:
                         metric.latency_base = self.get_latency(
@@ -408,6 +408,8 @@ class Benchmark:
                         )
                         # utilization = metric.tflops / metric.latency / 1e12 * 1e3
                 except Exception as e:
+                    import traceback
+                    traceback.print_exc()
                     metric.error_msg = str(e)
                     pytest.fail(str(e))  # raise exception again
                 finally:
@@ -420,7 +422,7 @@ class Benchmark:
                 mode=Config.mode.value,
                 result=metrics,
             )
-            print(result)
+            # print(result)
             logging.info(result.to_json())
 
 
@@ -501,15 +503,23 @@ def generate_tensor_input(shape, dtype, device):
     if dtype in FLOAT_DTYPES:
         return torch.randn(shape, dtype=dtype, device=device)
     elif dtype in INT_DTYPES:
-        return torch.randint(
-            torch.iinfo(dtype).min,
-            torch.iinfo(dtype).max,
-            shape,
-            dtype=dtype,
-            device="cpu",
-        ).to(device)
+        try:# some ops may not support int16 , change to int32
+            return torch.randint(
+                torch.iinfo(dtype).min,
+                torch.iinfo(dtype).max,
+                shape,
+                dtype=dtype,
+            ).to(device)
+        except:
+            dtype = torch.int32
+            return torch.randint(
+                torch.iinfo(dtype).min,
+                torch.iinfo(dtype).max,
+                shape,
+                dtype=dtype,
+            ).to(device)
     elif dtype in BOOL_DTYPES:
-        return torch.randint(0, 2, size=shape, dtype=dtype, device="cpu").to(device)
+        return torch.randint(0, 2, shape, dtype='int32').cast('bool').to(device)
     elif dtype in COMPLEX_DTYPES:
         return torch.randn(shape, dtype=dtype, device=device)
 

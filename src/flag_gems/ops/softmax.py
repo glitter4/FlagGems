@@ -363,7 +363,8 @@ class Softmax(PyLayer):
         ctx.input_dtype = input.dtype
 
         output = softmax(input, dim, half_to_float)
-        ctx.save_for_backward(output)
+        if input.requires_grad:
+            ctx.save_for_backward(output)
         
         return output
     
