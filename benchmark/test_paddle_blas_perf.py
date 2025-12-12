@@ -15,6 +15,43 @@ from benchmark.attri_util import (
 from benchmark.conftest import Config
 from benchmark.performance_utils import Benchmark, GenericBenchmark2DOnly, vendor_name
 
+class MvAndOuterBenchmark(GenericBenchmark2DOnly):
+    """
+    Benchmark for MV and Outer operations
+    """
+
+    def set_more_shapes(self):
+        return None
+
+    def get_input_iter(self, cur_dtype) -> Generator:
+        for m, n in self.shapes:
+            yield from self.input_fn(m, n, cur_dtype, self.device)
+
+
+def mv_input_fn(m, n, cur_dtype, device):
+    inp1 = torch.randn([m, n], dtype=cur_dtype, device=device)
+    inp2 = torch.randn([n], dtype=cur_dtype, device=device)
+    yield inp1, inp2
+
+@pytest.mark.parametrize(
+    "op_name, torch_op, input_fn",
+    [
+        pytest.param(
+            "mv",
+            torch.Tensor.mv,
+            mv_input_fn,
+            marks=pytest.mark.mv,
+        ),
+    ],
+)
+def test_mv_and_outer_benchmark(op_name, torch_op, input_fn):
+    bench = MvAndOuterBenchmark(
+        input_fn=input_fn,
+        op_name=op_name,
+        torch_op=torch_op,
+        dtypes=PADDLE_FLOAT_DTYPES,
+    )
+    bench.run()
 
 class BlasBenchmark(Benchmark):
     """
@@ -118,40 +155,4 @@ def test_blas_benchmark(op_name, torch_op, input_fn):
     bench.run()
 
 
-class MvAndOuterBenchmark(GenericBenchmark2DOnly):
-    """
-    Benchmark for MV and Outer operations
-    """
 
-    def set_more_shapes(self):
-        return None
-
-    def get_input_iter(self, cur_dtype) -> Generator:
-        for m, n in self.shapes:
-            yield from self.input_fn(m, n, cur_dtype, self.device)
-
-
-def mv_input_fn(m, n, cur_dtype, device):
-    inp1 = torch.randn([m, n], dtype=cur_dtype, device=device)
-    inp2 = torch.randn([n], dtype=cur_dtype, device=device)
-    yield inp1, inp2
-
-@pytest.mark.parametrize(
-    "op_name, torch_op, input_fn",
-    [
-        pytest.param(
-            "mv",
-            torch.Tensor.mv,
-            mv_input_fn,
-            marks=pytest.mark.mv,
-        ),
-    ],
-)
-def test_mv_and_outer_benchmark(op_name, torch_op, input_fn):
-    bench = MvAndOuterBenchmark(
-        input_fn=input_fn,
-        op_name=op_name,
-        torch_op=torch_op,
-        dtypes=PADDLE_FLOAT_DTYPES,
-    )
-    bench.run()
