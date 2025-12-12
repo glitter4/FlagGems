@@ -3,31 +3,7 @@ from dataclasses import asdict, dataclass, fields
 from enum import Enum
 from typing import List, Optional, Tuple
 
-quick = False
-if quick:
-    DEFAULT_WARMUP_COUNT = 2
-    DEFAULT_ITER_COUNT = 2
 
-    # LEGACY_SHAPES are maintained for legacy benchmark SIZE settings and may be removed in the future.
-    # Do not reference this elsewhere.
-    LEGACY_SHAPES = [i * 2 for i in range(1, 2, 1)]
-    LEGACY_NON_BLAS_SHAPES = [(2, shape) for shape in LEGACY_SHAPES]
-    LEGACY_BLAS_SHAPES = [(2, shape, shape, shape) for shape in LEGACY_SHAPES]
-
-    # Default shapes settings
-    DEFAULT_SHAPES = [
-        (2,2)
-    ]
-
-
-    def model_shapes():
-        # batch sizes * seq lengths
-        # BS = [1, 2, 3, 4, 8, 98, 256, 8192]
-        BS = [2]
-        # attn: wqkv, wo; ffn: w13, w2
-        NK = [
-            [2,4]
-        ]
 
 import torch
 
