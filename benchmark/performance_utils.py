@@ -257,6 +257,7 @@ class Benchmark:
         self.gems_op = gems_op
 
     def get_latency(self, op, *args, **kwargs):
+        import torch
         fn = lambda: op(*args, **kwargs)
         if self.is_backward:
             out = fn()
